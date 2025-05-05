@@ -1,6 +1,7 @@
 public class Tile {
     private int x;
     private int y;
+    private boolean hit;
 
 
     /**
@@ -11,6 +12,7 @@ public class Tile {
     public Tile(int ns, int ew){
         x = ew;
         y = ns;
+        hit = false;
     }
 
 
@@ -27,6 +29,24 @@ public class Tile {
      */
     public int getY() {
         return y;
+    }
+
+
+    /**
+     * @return if the Tile has been hit.
+     */
+    public boolean getHit(){
+        return hit;
+    }
+
+
+    public void setHit(boolean h){
+        hit = h;
+    }
+
+
+    public boolean equals(Tile t){
+        return(x == t.getX()) && (y == t.getY());
     }
 
     

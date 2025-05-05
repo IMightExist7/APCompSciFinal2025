@@ -45,4 +45,9 @@ public class Ship {
     }
 
 
+    public Tile[] getLocation(){
+        return location;
+    }
+
+
 }
