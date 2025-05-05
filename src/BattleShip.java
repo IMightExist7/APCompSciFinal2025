@@ -79,7 +79,7 @@ public class BattleShip extends JFrame{
                 gridLeft[r][c].setHorizontalAlignment(gridLeft[r][c].CENTER);
                 gridLeft[r][c].setVerticalAlignment(gridLeft[r][c].CENTER);
                 gridLeft[r][c].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-                gridLeft[r][c].addActionListener(null);
+                
                 
             }
         }
