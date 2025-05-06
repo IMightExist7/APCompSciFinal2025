@@ -41,5 +41,10 @@ public class Board {
     }
 
 
+    public Ship[] getShips(){
+        return ships;
+    }
+
+
     
 }
