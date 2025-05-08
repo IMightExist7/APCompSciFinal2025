@@ -31,6 +31,10 @@ public class BattleShip extends JFrame implements ActionListener{
 
     private int turn = 0;
 
+    private JLabel overlay;
+
+    private JButton next;
+
     
     public BattleShip(Board p1, Board p2){
         board1 = p1;
@@ -137,6 +141,18 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+    private boolean isShip(Board b, int x, int y){
+        for(Ship s: b.getShips()){
+            for(Tile t: s.getLocation()){
+                if(t.getX() == x && t.getY() == y){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
     private void fire(){
         int x = -1;
         int y = -1;
@@ -151,21 +167,39 @@ public class BattleShip extends JFrame implements ActionListener{
         if(x == -1){
             signalError();
         }else{
+            JLabel pop = new JLabel();
+            panel.add(pop);
             if(turn%2 == 0){
                 board2.getTile(x, y).setHit(true);
+                if(isShip(board2, x, y)){
+                    pop.setText("HIT");
+                }else{
+                    pop.setText("MISS");
+                }
             }else{
                 board1.getTile(x, y).setHit(true);
+                if(isShip(board1, x, y)){
+                    pop.setText("HIT");
+                }else{
+                    pop.setText("MISS");
+                }
             }
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            panel.remove(pop);
             nextTurn();
         }
     }
 
 
     private void nextTurn(){
-        JLabel overlay = new JLabel();
+        overlay = new JLabel();
         panel.add(overlay);
         overlay.setBackground(Color.WHITE);
-        JButton next = new JButton();
+        next = new JButton();
         panel.add(next);
         next.addActionListener(e -> cont());
         next.setBounds(600, 400, 300, 200);
@@ -177,7 +211,8 @@ public class BattleShip extends JFrame implements ActionListener{
 
 
     private void cont(){
-
+        panel.remove(overlay);
+        panel.remove(next);
     }
 
 
