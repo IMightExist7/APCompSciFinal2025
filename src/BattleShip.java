@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.Statement;
 
 
 public class BattleShip extends JFrame implements ActionListener{
@@ -118,7 +119,7 @@ public class BattleShip extends JFrame implements ActionListener{
         panel.add(shipButton);
         shipButton.setBounds(0,0, 100, 150);
         shipButton.setOpaque(true);
-        shipButton.addActionListener(e -> shipTempMethod());
+        shipButton.addActionListener(e -> shipAdd());
 
         JButton fireButton = new JButton();
         fireButton.setText("FIRE");
@@ -136,7 +137,7 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
-    public void shipTempMethod()
+    public void shipAdd()
     {
         int i=0;
         while(ships[i]==null&&i<ships.length) {
@@ -151,12 +152,12 @@ public class BattleShip extends JFrame implements ActionListener{
 
 
 
-    public void actionPerformed(ActionEvent e) { 
+    public void actionPerformed(ActionEvent e) {
+        ImageIcon s = new ImageIcon("img/t2/t2-selected.png");
+        ImageIcon t2 = new ImageIcon("img/t2/t2.png");
         for (int r=0; r < board1.getSide(); r++) {
             for(int c=0; c < board1.getSide();c++) {
                 if (e.getSource().equals(gridRight[r][c])) {
-                    ImageIcon s = new ImageIcon("img/t2/t2-selected.png");
-                    ImageIcon t2 = new ImageIcon("img/t2/t2.png");
                     if(turn%2 == 0){
                         if(!board2.getTile(c, r).getHit()){
                             selectedB1[r][c] = !selectedB1[r][c];
@@ -166,6 +167,8 @@ public class BattleShip extends JFrame implements ActionListener{
                                 gridRight[r][c].setIcon(t2);
                             }
                             System.out.print(selectedB1[r][c]);
+                        }else{
+                            signalError();
                             return;
                         }
                     }else{
@@ -177,9 +180,15 @@ public class BattleShip extends JFrame implements ActionListener{
                                 gridRight[r][c].setIcon(t2);
                             }
                             System.out.print(selectedB1[r][c]);
+                        }else{
+                            signalError();
                             return;
                         }
                     }
+                    
+                }else if(selectedB1[r][c]){
+                    selectedB1[r][c] = false;
+                    gridRight[r][c].setIcon(t2);
                 }
                 
             } 
