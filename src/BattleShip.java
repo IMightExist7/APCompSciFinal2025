@@ -35,6 +35,10 @@ public class BattleShip extends JFrame implements ActionListener{
 
     private JButton next;
 
+    private Ship[] ships;
+    private Ship[] shipsInPlay;
+    private Ship curShip;
+
     
     public BattleShip(Board p1, Board p2){
         board1 = p1;
@@ -78,7 +82,7 @@ public class BattleShip extends JFrame implements ActionListener{
 
         
 
-        ImageIcon t1 = new ImageIcon("C:/Users/pig04/APCompSciFinal2025/img/t1.png");
+        ImageIcon t1 = new ImageIcon("img/t1.png");
         //board1
         gridLeft = new JButton[board2.getSide()][board2.getSide()];
         for(int r = 0; r < board1.getSide(); r++){
@@ -93,7 +97,7 @@ public class BattleShip extends JFrame implements ActionListener{
             }
         }
 
-        ImageIcon t2 = new ImageIcon("img/t2.png");
+        ImageIcon t2 = new ImageIcon("img/t2/t2.png");
         //board2
         gridRight = new JButton[board2.getSide()][board2.getSide()];
         for(int r = 0; r < board1.getSide(); r++){
@@ -109,19 +113,40 @@ public class BattleShip extends JFrame implements ActionListener{
             }
         }
 
-        fire = new JButton();
-        panel.add(fire);
-        fire.addActionListener(e -> fire());
-        
+        JButton shipButton = new JButton();
+        shipButton.setText("temp");
+        panel.add(shipButton);
+        shipButton.setBounds(0,0, 100, 150);
+        shipButton.setOpaque(true);
+        shipButton.addActionListener(e -> shipTempMethod());
+
+        JButton fireButton = new JButton();
+        fireButton.setText("FIRE");
+        panel.add(fireButton);
+        fireButton.setBounds(tileLength+625,750, 150, 100);
+        fireButton.setOpaque(true);
+        fireButton.setBackground(Color.red);
+        fireButton.addActionListener(e -> fire());       
 
         this.add(panel);
         this.setVisible(true);
         this.isFocusableWindow();
 
 
+    }
 
 
-
+    public void shipTempMethod()
+    {
+        int i=0;
+        while(ships[i]==null&&i<ships.length) {
+            i++;
+        }
+        if(i!=ships.length-1) {
+            curShip=ships[i];
+        }
+        
+        
     }
 
 
@@ -130,10 +155,31 @@ public class BattleShip extends JFrame implements ActionListener{
         for (int r=0; r < board1.getSide(); r++) {
             for(int c=0; c < board1.getSide();c++) {
                 if (e.getSource().equals(gridRight[r][c])) {
-                    selectedB1[r][c] = !selectedB1[r][c];
-                    System.out.print("test");
-                    System.out.print(selectedB1[r][c]);
-                    return;
+                    ImageIcon s = new ImageIcon("img/t2/t2-selected.png");
+                    ImageIcon t2 = new ImageIcon("img/t2/t2.png");
+                    if(turn%2 == 0){
+                        if(!board2.getTile(c, r).getHit()){
+                            selectedB1[r][c] = !selectedB1[r][c];
+                            if(selectedB1[r][c]){
+                                gridRight[r][c].setIcon(s);
+                            }else{
+                                gridRight[r][c].setIcon(t2);
+                            }
+                            System.out.print(selectedB1[r][c]);
+                            return;
+                        }
+                    }else{
+                        if(board1.getTile(c, r).getHit()){
+                            selectedB1[r][c] = !selectedB1[r][c];
+                            if(selectedB1[r][c]){
+                                gridRight[r][c].setIcon(s);
+                            }else{
+                                gridRight[r][c].setIcon(t2);
+                            }
+                            System.out.print(selectedB1[r][c]);
+                            return;
+                        }
+                    }
                 }
                 
             } 
