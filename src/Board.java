@@ -16,6 +16,7 @@ public class Board {
                 board[row][col] = new Tile(row, col);
             }
         }
+        ships = new Ship[5];
     }
 
 
