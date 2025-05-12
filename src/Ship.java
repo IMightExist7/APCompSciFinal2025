@@ -5,7 +5,7 @@ public class Ship {
     
 
     /**
-     * Constructor for a Ship object.
+     * Constructor for a Ship Object.
      * @param s how many Tiles the Ship occupies.
      * @param sub is it a submarine.
      */
@@ -42,6 +42,16 @@ public class Ship {
                 location[i] = b.getTile(start.getX() + i, start.getY());
             }
         }
+    }
+
+
+    public Tile[] getLocation(){
+        return location;
+    }
+
+
+    public boolean isSub(){
+        return submarine;
     }
 
 
