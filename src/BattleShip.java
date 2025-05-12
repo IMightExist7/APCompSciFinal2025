@@ -276,7 +276,6 @@ public class BattleShip extends JFrame implements ActionListener{
 		t.beep();
 	}
 
-    //test does it work
 
 
     
