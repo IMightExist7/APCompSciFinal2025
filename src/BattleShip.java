@@ -74,7 +74,7 @@ public class BattleShip extends JFrame implements ActionListener{
 
         tileHeight = 50;
         tileLength = 50;
-        this.setSize(1920, 1080);
+        this.setSize(1800, 800);
         
         panel = new JPanel();
         panel.setLayout(null);
@@ -90,7 +90,7 @@ public class BattleShip extends JFrame implements ActionListener{
             for(int c = 0; c < board1.getSide(); c++){
                 gridLeft[r][c] = new JButton(t1);
                 panel.add(gridLeft[r][c]);
-                gridLeft[r][c].setBounds(tileLength*c+200, tileHeight*r+160, tileLength, tileHeight);
+                gridLeft[r][c].setBounds(tileLength*c+200, tileHeight*r+100, tileLength, tileHeight);
                 gridLeft[r][c].setOpaque(true);
                 gridLeft[r][c].setHorizontalAlignment(gridLeft[r][c].CENTER);
                 gridLeft[r][c].setVerticalAlignment(gridLeft[r][c].CENTER);
@@ -105,7 +105,7 @@ public class BattleShip extends JFrame implements ActionListener{
             for(int c = 0; c < board1.getSide(); c++){
                 gridRight[r][c] = new JButton(t2);
                 panel.add(gridRight[r][c]);
-                gridRight[r][c].setBounds(tileLength*c+800, tileHeight*r+160, tileLength, tileHeight);
+                gridRight[r][c].setBounds(tileLength*c+800, tileHeight*r+100, tileLength, tileHeight);
                 gridRight[r][c].setOpaque(true);
                 gridRight[r][c].setHorizontalAlignment(gridRight[r][c].CENTER);
                 gridRight[r][c].setVerticalAlignment(gridRight[r][c].CENTER);
@@ -124,7 +124,7 @@ public class BattleShip extends JFrame implements ActionListener{
         JButton fireButton = new JButton();
         fireButton.setText("FIRE");
         panel.add(fireButton);
-        fireButton.setBounds(tileLength+625,750, 150, 100);
+        fireButton.setBounds(tileLength+625, 650, 150, 100);
         fireButton.setOpaque(true);
         fireButton.setBackground(Color.red);
         fireButton.addActionListener(e -> fire());       
