@@ -67,7 +67,9 @@ public class BattleShip extends JFrame implements ActionListener{
         });
     }  
 
-
+    /**
+     * Initialize game display.
+     */
     public void initDisplay(){
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
