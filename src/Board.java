@@ -17,6 +17,7 @@ public class Board {
             }
         }
         ships = new Ship[5];
+
     }
 
 
@@ -28,6 +29,18 @@ public class Board {
      */
     public Tile getTile(int x, int y){
         return board[y][x];
+    }
+
+    public void placeShip(Ship s){
+        int i=0;
+
+        while(ships[i]!=null&&i<ships.length-1){
+            i++;
+        }
+        if(ships[i]==null)
+            ships[i]=s;
+            System.out.println(ships[i].toString());
+        
     }
 
     
