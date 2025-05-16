@@ -28,19 +28,19 @@ public class Ship {
         this.direction = direction;
         location[0] = start;
         if(direction.toUpperCase().equals("N")){
-            for(int i = 1; i < size; i++){
-                location[i] = b.getTile(start.getX(), start.getY()+i);
+            for(int i = 0; i < size; i++){
+                location[i] = b.getTile(start.getX(), start.getY() - i);
             }
         }else if(direction.toUpperCase().equals("E")){
-            for(int i = 1; i < size; i++){
+            for(int i = 0; i < size; i++){
                 location[i] = b.getTile(start.getX() + i, start.getY());
             }
         }else if(direction.toUpperCase().equals("S")){
-            for(int i = 1; i < size; i++){
-                location[i] = b.getTile(start.getX(), start.getY() - i);
+            for(int i = 0; i < size; i++){
+                location[i] = b.getTile(start.getX(), start.getY() + i);
             }
         }else{
-            for(int i = 1; i < size; i++){
+            for(int i = 0; i < size; i++){
                 location[i] = b.getTile(start.getX() + i, start.getY());
             }
         }
@@ -49,6 +49,10 @@ public class Ship {
 
     public Tile[] getLocation(){
         return location;
+    }
+
+    public int getSize(){
+        return size;
     }
 
 
