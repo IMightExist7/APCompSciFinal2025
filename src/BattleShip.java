@@ -206,54 +206,45 @@ public class BattleShip extends JFrame implements ActionListener{
                 }
                 else if(e.getSource().equals(gridLeft[r][c])){
                     if(placeMode==true && curShip!=null) {
-                        String direction="N";
+                        String direction="w";
                         
-                        if(direction.toUpperCase().equals("N") && r-curShip.getSize()>=0){
+                        if(direction.toUpperCase().equals("N") && r-curShip.getSize()+1>=0){
                             for(int i = 0; i < curShip.getSize(); i++){
                                 gridLeft[r-i][c].setIcon(shipImageIcon);
 
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
-                                board1.placeShip(curShip);
-
-                                for(int j=0;j<curShip.getSize();j++)
-                                    System.out.println(curShip.getLocation()[j].getX() + " " + curShip.getLocation()[j].getY());    
+                                board1.placeShip(curShip);    
                             }
                             placeMode=!placeMode;
-                        }else if(direction.toUpperCase().equals("E") && c+curShip.getSize()<board1.getSide()){
+                            curShip=null;
+                        }else if(direction.toUpperCase().equals("E") && c+curShip.getSize()-1<board1.getSide()){
                             for(int i = 0; i < curShip.getSize(); i++){
                                 gridLeft[r][c+i].setIcon(shipImageIcon);
 
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
                                 board1.placeShip(curShip);
-
-                                for(int j=0;j<curShip.getSize();j++)
-                                    System.out.println(curShip.getLocation()[j].getX() + " " + curShip.getLocation()[j].getY()); 
                             }
                             placeMode=!placeMode;
-                        }else if(direction.toUpperCase().equals("S") && c-curShip.getSize()>=0){
-                            for(int i = 0; i < curShip.getSize(); i++){
-                                gridLeft[r][c-1].setIcon(shipImageIcon);
-
-                                curShip.setLocation(board2, board2.getTile(r,c), direction);
-                                board1.placeShip(curShip);
-
-                                for(int j=0;j<curShip.getSize();j++)
-                                    System.out.println(curShip.getLocation()[j].getX() + " " + curShip.getLocation()[j].getY()); 
-                            }
-                            placeMode=!placeMode;
-                        }else if(direction.toUpperCase().equals("W") && r+curShip.getSize()<board1.getSide()){
+                            curShip=null;
+                        }else if(direction.toUpperCase().equals("S") && r+curShip.getSize()-1<board1.getSide()){
                             for(int i = 0; i < curShip.getSize(); i++){
                                 gridLeft[r+i][c].setIcon(shipImageIcon);
 
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
                                 board1.placeShip(curShip);
-
-                                for(int j=0;j<curShip.getSize();j++)
-                                    System.out.println(curShip.getLocation()[j].getX() + " " + curShip.getLocation()[0].getY()); 
                             }
                             placeMode=!placeMode;
+                            curShip=null;
+                        }else if(direction.toUpperCase().equals("W") && c-curShip.getSize()+1>=0){
+                            for(int i = 0; i < curShip.getSize(); i++){
+                                gridLeft[r][c-i].setIcon(shipImageIcon);
+
+                                curShip.setLocation(board2, board2.getTile(r,c), direction);
+                                board1.placeShip(curShip); 
+                            }
+                            placeMode=!placeMode;
+                            curShip=null;
                         }
-                        curShip=null;
                     }
                 }
             } 
