@@ -233,7 +233,7 @@ public class BattleShip extends JFrame implements ActionListener{
                             }
                             placeMode=!placeMode;
                         }else if(direction.toUpperCase().equals("E") && c+curShip.getSize()<board1.getSide()){
-                            dir += direction.toUpperCase();
+                            dir += direction.toUpperCase() + "/";
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r][c+i].getLocation();
                                 String file = dir+i;
@@ -249,7 +249,7 @@ public class BattleShip extends JFrame implements ActionListener{
                             }
                             placeMode=!placeMode;
                         }else if(direction.toUpperCase().equals("S") && c-curShip.getSize()>=0){
-                            dir += direction.toUpperCase();
+                            dir += direction.toUpperCase() + "/";
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r][c-1].getLocation();
                                 String file = dir+i;
@@ -265,7 +265,7 @@ public class BattleShip extends JFrame implements ActionListener{
                             }
                             placeMode=!placeMode;
                         }else if(direction.toUpperCase().equals("W") && r+curShip.getSize()<board1.getSide()){
-                            dir += direction.toUpperCase();
+                            dir += direction.toUpperCase() + "/";
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r+i][c].getLocation();
                                 String file = dir+i;
