@@ -27,7 +27,7 @@ public class Board {
      * @param y coordinate of the Tile.
      * @return Tile at given coordinates.
      */
-    public Tile getTile(int x, int y){
+    public Tile getTile(int y, int x){
         return board[y][x];
     }
 

@@ -30,6 +30,7 @@ public class Ship {
         if(direction.toUpperCase().equals("N")){
             for(int i = 0; i < size; i++){
                 location[i] = b.getTile(start.getX(), start.getY() - i);
+                System.out.println(b.getTile(start.getX(), start.getY() - i));
             }
         }else if(direction.toUpperCase().equals("E")){
             for(int i = 0; i < size; i++){
@@ -41,7 +42,7 @@ public class Ship {
             }
         }else{
             for(int i = 0; i < size; i++){
-                location[i] = b.getTile(start.getX() + i, start.getY());
+                location[i] = b.getTile(start.getX() - i, start.getY());
             }
         }
     }
