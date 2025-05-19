@@ -1,6 +1,7 @@
 public class Ship {
     private int size;
     private Tile[] location;
+    private String direction;
     private boolean submarine;
     
 
@@ -24,6 +25,7 @@ public class Ship {
      *              (N/E/S/W)
      */
     public void setLocation(Board b, Tile start, String direction){
+        this.direction = direction;
         location[0] = start;
         if(direction.toUpperCase().equals("N")){
             for(int i = 0; i < size; i++){

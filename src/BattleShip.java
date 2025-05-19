@@ -206,11 +206,22 @@ public class BattleShip extends JFrame implements ActionListener{
                 }
                 else if(e.getSource().equals(gridLeft[r][c])){
                     if(placeMode==true && curShip!=null) {
-                        String direction="w";
-                        
+                        String direction="N";
+                        String dir = "img/s";
+                        if(curShip.isSub()){
+                            dir+="3-y/";
+                        }else{
+                            dir += curShip.getSize() + "/";
+                        }
+                        ImageIcon src, s1, s2, s3, s4;
                         if(direction.toUpperCase().equals("N") && r-curShip.getSize()+1>=0){
+                            dir += direction.toUpperCase() + "/";
                             for(int i = 0; i < curShip.getSize(); i++){
-                                gridLeft[r-i][c].setIcon(shipImageIcon);
+                                Point loc = gridLeft[r-i][c].getLocation();
+                                String file = dir+i;
+                                JLabel ship = new JLabel(new ImageIcon(file));
+                                panel.add(ship);
+                                ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
 
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
                                 board1.placeShip(curShip);    
@@ -218,8 +229,13 @@ public class BattleShip extends JFrame implements ActionListener{
                             placeMode=!placeMode;
                             curShip=null;
                         }else if(direction.toUpperCase().equals("E") && c+curShip.getSize()-1<board1.getSide()){
+                            dir += direction.toUpperCase() + "/";
                             for(int i = 0; i < curShip.getSize(); i++){
-                                gridLeft[r][c+i].setIcon(shipImageIcon);
+                                Point loc = gridLeft[r][c+i].getLocation();
+                                String file = dir+i;
+                                JLabel ship = new JLabel(new ImageIcon(file));
+                                panel.add(ship);
+                                ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
 
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
                                 board1.placeShip(curShip);
@@ -227,18 +243,27 @@ public class BattleShip extends JFrame implements ActionListener{
                             placeMode=!placeMode;
                             curShip=null;
                         }else if(direction.toUpperCase().equals("S") && r+curShip.getSize()-1<board1.getSide()){
+                            dir += direction.toUpperCase() + "/";
                             for(int i = 0; i < curShip.getSize(); i++){
-                                gridLeft[r+i][c].setIcon(shipImageIcon);
-
+                                Point loc = gridLeft[r][c-1].getLocation();
+                                String file = dir+i;
+                                JLabel ship = new JLabel(new ImageIcon(file));
+                                panel.add(ship);
+                                ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
                                 board1.placeShip(curShip);
                             }
                             placeMode=!placeMode;
                             curShip=null;
                         }else if(direction.toUpperCase().equals("W") && c-curShip.getSize()+1>=0){
+                            dir += direction.toUpperCase() + "/";
                             for(int i = 0; i < curShip.getSize(); i++){
-                                gridLeft[r][c-i].setIcon(shipImageIcon);
-
+                                Point loc = gridLeft[r+i][c].getLocation();
+                                String file = dir+i;
+                                JLabel ship = new JLabel(new ImageIcon(file));
+                                panel.add(ship);
+                                ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
+                              
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
                                 board1.placeShip(curShip); 
                             }
