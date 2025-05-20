@@ -1,0 +1,5 @@
+-Ships can be placed on top of other ships
+-Issue where ship JLabels dissapear when touched with cursor
+-Force ship placement at start
+-Test turn change
+-Allow p2 to place ships
