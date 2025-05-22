@@ -18,7 +18,13 @@ public class BattleShip extends JFrame implements ActionListener{
     /**Bottom Grid */
     private JButton[][] gridRight;
     /** The main panel containing the game components. */
-	private JPanel panel;
+	private JLayeredPane panel;
+
+    private JPanel p1;
+
+    private JPanel p2;
+
+    private JPanel p3;
     /** Length of Tiles*/
     private int tileLength;
     /** Height of Tiles*/
@@ -55,9 +61,9 @@ public class BattleShip extends JFrame implements ActionListener{
                                     {{new ImageIcon("img/s5/N/0"), new ImageIcon("img/s5/N/1"), new ImageIcon("img/s5/N/2"), new ImageIcon("img/s5/N/3"), new ImageIcon("img/s5/N/4")}, {new ImageIcon("img/s5/E/0"), new ImageIcon("img/s5/E/1"), new ImageIcon("img/s5/E/2"), new ImageIcon("img/s5/E/3"), new ImageIcon("img/s5/E/4")}, {new ImageIcon("img/s5/S/0"), new ImageIcon("img/s5/S/1"), new ImageIcon("img/s5/S/2"), new ImageIcon("img/s5/S/3"), new ImageIcon("img/s5/S/4")}, {new ImageIcon("img/s5/W/0"), new ImageIcon("img/s5/W/1"), new ImageIcon("img/s5/W/2"), new ImageIcon("img/s5/W/3"), new ImageIcon("img/s5/W/4")}}};  //s5
 
     
-    public BattleShip(Board p1, Board p2){
-        board1 = p1;
-        board2 = p2;
+    public BattleShip(Board b1, Board b2){
+        board1 = b1;
+        board2 = b2;
 
         ships = new Ship[]
                 {new Ship(5, false), 
@@ -67,7 +73,12 @@ public class BattleShip extends JFrame implements ActionListener{
                 new Ship(2, false)};
 
         shipImageIcon = new ImageIcon("img/t2-selected.png");
-        selectedB1 = new boolean[p1.getSide()][p1.getSide()];
+        selectedB1 = new boolean[b1.getSide()][b1.getSide()];
+        panel = new JLayeredPane();
+        p1 = new JPanel();
+        p2 = new JPanel();
+        p3 = new JPanel();
+        this.setContentPane(panel);
         initDisplay();
         
     }
@@ -89,24 +100,35 @@ public class BattleShip extends JFrame implements ActionListener{
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        panel.add(p1, 1);
+        panel.add(p2, 2);
+        panel.add(p3, 3);
+
         tileHeight = 50;
         tileLength = 50;
         this.setSize(1920, 1080);
         
-        panel = new JPanel();
-        panel.setLayout(null);
-
-        panel.setBackground(Color.WHITE);
-
+        p1.setSize(1920, 1080);
+        p2.setSize(1920, 1080);
+        p3.setSize(1920, 1080);
         
+        
+        p1.setLayout(null);
+        p2.setLayout(null);
+        p3.setLayout(null);
+
+        p2.setOpaque(false);
+        p3.setOpaque(false);
 
         ImageIcon t1 = new ImageIcon("img/t1.png");
+
+
         //board1
         gridLeft = new JButton[board2.getSide()][board2.getSide()];
         for(int r = 0; r < board1.getSide(); r++){
             for(int c = 0; c < board1.getSide(); c++){
                 gridLeft[r][c] = new JButton(t1);
-                panel.add(gridLeft[r][c]);
+                p1.add(gridLeft[r][c]);
                 gridLeft[r][c].setBounds(tileLength*c+200, tileHeight*r+160, tileLength, tileHeight);
                 gridLeft[r][c].setOpaque(true);
                 gridLeft[r][c].setHorizontalAlignment(gridLeft[r][c].CENTER);
@@ -122,7 +144,7 @@ public class BattleShip extends JFrame implements ActionListener{
         for(int r = 0; r < board1.getSide(); r++){
             for(int c = 0; c < board1.getSide(); c++){
                 gridRight[r][c] = new JButton(t2);
-                panel.add(gridRight[r][c]);
+                p1.add(gridRight[r][c]);
                 gridRight[r][c].setBounds(tileLength*c+800, tileHeight*r+160, tileLength, tileHeight);
                 gridRight[r][c].setOpaque(true);
                 gridRight[r][c].setHorizontalAlignment(gridRight[r][c].CENTER);
@@ -135,22 +157,23 @@ public class BattleShip extends JFrame implements ActionListener{
 
         JButton shipButton = new JButton();
         shipButton.setText("New Ship");
-        panel.add(shipButton);
+        p1.add(shipButton);
         shipButton.setBounds(0,0, 100, 150);
         shipButton.setOpaque(true);
         shipButton.addActionListener(e -> shipAdd());
 
         JButton fireButton = new JButton();
         fireButton.setText("FIRE");
-        panel.add(fireButton);
+        p1.add(fireButton);
         fireButton.setBounds(tileLength+625,675, 150, 100);
         fireButton.setOpaque(true);
         fireButton.setBackground(Color.red);
         fireButton.addActionListener(e -> fire());       
 
-        this.add(panel);
+        //this.add(panel);
         this.setVisible(true);
         this.isFocusableWindow();
+        
 
 
     }
@@ -223,7 +246,7 @@ public class BattleShip extends JFrame implements ActionListener{
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r-i][c].getLocation();
                                 JLabel ship = new JLabel(shipIcons[index][0][i]);
-                                panel.add(ship);
+                                p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                                 ship.setOpaque(true);
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
@@ -235,7 +258,7 @@ public class BattleShip extends JFrame implements ActionListener{
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r][c+i].getLocation();
                                 JLabel ship = new JLabel(shipIcons[index][1][i]);
-                                panel.add(ship);
+                                p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                                 ship.setOpaque(true);
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
@@ -247,12 +270,12 @@ public class BattleShip extends JFrame implements ActionListener{
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r][c-i].getLocation();
                                 JLabel ship = new JLabel(shipIcons[index][2][i]);
-                                panel.add(ship);
+                                p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                                 ship.setOpaque(true);
-                                
                                 curShip.setLocation(board2, board2.getTile(r,c), direction);
                                 board1.placeShip(curShip);
+                                
                             }
                             placeMode=!placeMode;
                             curShip=null;
@@ -260,7 +283,7 @@ public class BattleShip extends JFrame implements ActionListener{
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r+i][c].getLocation();
                                 JLabel ship = new JLabel(shipIcons[index][3][i]);
-                                panel.add(ship);
+                                p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                                 ship.setOpaque(true);
                               
@@ -274,6 +297,10 @@ public class BattleShip extends JFrame implements ActionListener{
                 }
             } 
         }
+        panel.setLayer(p1, 1);
+        panel.setLayer(p2, 2);
+        Background b = new Background(panel, p1, p2, p3);
+        new Thread(b).start();
     }
 
 
@@ -304,7 +331,7 @@ public class BattleShip extends JFrame implements ActionListener{
             signalError();
         }else{
             JLabel pop = new JLabel();
-            panel.add(pop);
+            p3.add(pop);
             if(turn%2 == 0){
                 board2.getTile(x, y).setHit(true);
                 if(isShip(board2, x, y)){
@@ -325,7 +352,7 @@ public class BattleShip extends JFrame implements ActionListener{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            panel.remove(pop);
+            p3.remove(pop);
             nextTurn();
         }
     }
@@ -333,10 +360,10 @@ public class BattleShip extends JFrame implements ActionListener{
 
     private void nextTurn(){
         overlay = new JLabel();
-        panel.add(overlay);
+        p3.add(overlay);
         overlay.setBackground(Color.WHITE);
         next = new JButton();
-        panel.add(next);
+        p3.add(next);
         next.addActionListener(e -> cont());
         next.setBounds(600, 400, 300, 200);
         next.setText("Next Turn");
@@ -347,8 +374,8 @@ public class BattleShip extends JFrame implements ActionListener{
 
 
     private void cont(){
-        panel.remove(overlay);
-        panel.remove(next);
+        p3.remove(overlay);
+        p3.remove(next);
     }
 
 
