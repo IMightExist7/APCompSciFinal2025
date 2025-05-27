@@ -408,7 +408,9 @@ public class BattleShip extends JFrame implements ActionListener{
         turn++;
         overlay = new JLabel();
         p3.add(overlay);
+        p3.setOpaque(true);
         overlay.setBackground(Color.WHITE);
+        overlay.setOpaque(true);
         next = new JButton();
         p3.add(next);
         next.addActionListener(e -> cont());
@@ -421,6 +423,7 @@ public class BattleShip extends JFrame implements ActionListener{
 
 
     private void cont(){
+        p3.setOpaque(false);
         p3.remove(overlay);
         p3.remove(next);
     }
