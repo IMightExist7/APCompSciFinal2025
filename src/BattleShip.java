@@ -37,6 +37,8 @@ public class BattleShip extends JFrame implements ActionListener{
 
     private JButton fire;
 
+    private JButton shipButton;
+
     private int turn = 0;
 
     private JLabel overlay;
@@ -163,21 +165,21 @@ public class BattleShip extends JFrame implements ActionListener{
             }
         }
 
-        JButton shipButton = new JButton();
+        shipButton = new JButton();
         shipButton.setText("New Ship");
         p1.add(shipButton);
         shipButton.setBounds(0,0, 100, 150);
         shipButton.setOpaque(true);
         shipButton.addActionListener(e -> shipAdd());
 
-        JButton fireButton = new JButton();
-        fireButton.setText("FIRE");
-        p1.add(fireButton);
-        fireButton.setBounds(tileLength+625,675, 150, 100);
-        fireButton.setOpaque(true);
-        fireButton.setBackground(Color.red);
-        fireButton.addActionListener(e -> fire());       
-        fireButton.setVisible(false);
+        fire = new JButton();
+        fire.setText("FIRE");
+        p1.add(fire);
+        fire.setBounds(tileLength+625,675, 150, 100);
+        fire.setOpaque(true);
+        fire.setBackground(Color.red);
+        fire.addActionListener(e -> fire());       
+        fire.setVisible(false);
 
         //this.add(panel);
         this.setVisible(true);
@@ -346,6 +348,10 @@ public class BattleShip extends JFrame implements ActionListener{
 
 
     private void nextPlace(){
+        if(turn == 1){
+            fire.setVisible(true);
+            shipButton.setVisible(false);
+        }
         nextTurn();
     }
 
@@ -416,6 +422,54 @@ public class BattleShip extends JFrame implements ActionListener{
         next.addActionListener(e -> cont());
         next.setBounds(600, 400, 300, 200);
         next.setText("Next Turn");
+        p2.removeAll();
+        Board curBoard;
+        if(turn%2 == 0){
+            curBoard = board1;
+        }else{
+            curBoard = board2;
+        }
+        if(turn > 1){
+            for(Ship s: curBoard.getShips()){
+                int index = s.getSize()-1;
+                if(s.isSub()){
+                    index++;
+                }
+                if(s.getDirection().toUpperCase().equals("N")){
+                    for(int l = 0; l < s.getSize(); l++){
+                        Point loc = gridLeft[s.getLocation()[l].getY()][s.getLocation()[l].getX()].getLocation();
+                        JLabel ship = new JLabel(shipIcons[index][0][l]);
+                        p2.add(ship);
+                        ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
+                        ship.setOpaque(true);
+                    }
+                }else if(s.getDirection().toUpperCase().equals("E")){
+                    for(int l = 0; l < s.getSize(); l++){
+                        Point loc = gridLeft[s.getLocation()[l].getY()][s.getLocation()[l].getX()].getLocation();
+                        JLabel ship = new JLabel(shipIcons[index][1][l]);
+                        p2.add(ship);
+                        ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
+                        ship.setOpaque(true);
+                    }
+                }else if(s.getDirection().toUpperCase().equals("S")){
+                    for(int l = 0; l < s.getSize(); l++){
+                        Point loc = gridLeft[s.getLocation()[l].getY()][s.getLocation()[l].getX()].getLocation();
+                        JLabel ship = new JLabel(shipIcons[index][2][l]);
+                        p2.add(ship);
+                        ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
+                        ship.setOpaque(true);
+                    }
+                }else{
+                    for(int l = 0; l < s.getSize(); l++){
+                        Point loc = gridLeft[s.getLocation()[l].getY()][s.getLocation()[l].getX()].getLocation();
+                        JLabel ship = new JLabel(shipIcons[index][3][l]);
+                        p2.add(ship);
+                        ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
+                        ship.setOpaque(true);
+                    }
+                }
+            }
+        }
         Board temp = board1;
         board1 = board2;
         board2 = temp;

@@ -57,6 +57,11 @@ public class Ship {
     }
 
 
+    public String getDirection(){
+        return direction;
+    }
+
+
     public boolean isSub(){
         return submarine;
     }
