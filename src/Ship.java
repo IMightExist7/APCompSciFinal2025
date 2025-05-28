@@ -26,11 +26,11 @@ public class Ship {
      */
     public void setLocation(Board b, Tile start, String direction){
         this.direction = direction;
+        System.out.println(direction);
         location[0] = start;
         if(direction.toUpperCase().equals("N")){
             for(int i = 0; i < size; i++){
                 location[i] = b.getTile(start.getX(), start.getY() - i);
-                System.out.println(b.getTile(start.getX(), start.getY() - i));
             }
         }else if(direction.toUpperCase().equals("E")){
             for(int i = 0; i < size; i++){

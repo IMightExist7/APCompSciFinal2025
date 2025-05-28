@@ -201,7 +201,6 @@ public class BattleShip extends JFrame implements ActionListener{
         else
             direction=0;
         directionButton.setText(directions[direction].toUpperCase());
-        System.out.println(directions[direction]);
 
     }
 
@@ -250,7 +249,6 @@ public class BattleShip extends JFrame implements ActionListener{
                             }else{
                                 gridRight[r][c].setIcon(t2);
                             }
-                            System.out.print(selectedB1[r][c]);
                         }else{
                             signalError();
                             return;
@@ -263,7 +261,6 @@ public class BattleShip extends JFrame implements ActionListener{
                             }else{
                                 gridRight[r][c].setIcon(t2);
                             }
-                            System.out.print(selectedB1[r][c]);
                         }else{
                             signalError();
                             return;
@@ -282,55 +279,43 @@ public class BattleShip extends JFrame implements ActionListener{
                         if(index == 2 && curShip.isSub()){
                             index++;
                         }
-                        System.out.println(r-curShip.getSize()+1>=0);
                         if(directions[direction].toUpperCase().equals("N") && r-curShip.getSize()+1>=0){
+                            curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r-i][c].getLocation();
                                 JLabel ship = new JLabel(shipIcons[index][0][i]);
                                 p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                ship.setOpaque(true);
-
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                board1.placeShip(curShip);    
                             }
                         }else if(directions[direction].toUpperCase().equals("E") && c+curShip.getSize()-1<board1.getSide()){
+                            curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r][c+i].getLocation();
                                 JLabel ship = new JLabel(shipIcons[index][1][i]);
                                 p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-                                ship.setOpaque(true);
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                board1.placeShip(curShip);
                             }
                         }else if(directions[direction].toUpperCase().equals("S") && r+curShip.getSize()-1<board1.getSide()){
+                            curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r+i][c].getLocation();
                                 JLabel ship = new JLabel(shipIcons[index][2][i]);
                                 p2.add(ship);
-                                ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-                                ship.setOpaque(true);
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                board1.placeShip(curShip);
-                                
+                                ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);                                
                             }
                         }else if(directions[direction].toUpperCase().equals("W") && c-curShip.getSize()+1>=0){
+                            curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r][c-i].getLocation();
                                 JLabel ship = new JLabel(shipIcons[index][3][i]);
                                 p2.add(ship);
-                                ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-                                ship.setOpaque(true);
-                              
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                board1.placeShip(curShip);
+                                ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);                              
                             }
                         }
+                        placeMode=!placeMode;
+                        board1.placeShip(curShip);
+                        
                     }
-                    placeMode=!placeMode;
                     directionButton.setVisible(placeMode);
                     curShip=null;
                     if(index == 1){
@@ -441,7 +426,6 @@ public class BattleShip extends JFrame implements ActionListener{
                         JLabel ship = new JLabel(shipIcons[index][0][l]);
                         p2.add(ship);
                         ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-                        ship.setOpaque(true);
                     }
                 }else if(s.getDirection().toUpperCase().equals("E")){
                     for(int l = 0; l < s.getSize(); l++){
@@ -449,7 +433,6 @@ public class BattleShip extends JFrame implements ActionListener{
                         JLabel ship = new JLabel(shipIcons[index][1][l]);
                         p2.add(ship);
                         ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-                        ship.setOpaque(true);
                     }
                 }else if(s.getDirection().toUpperCase().equals("S")){
                     for(int l = 0; l < s.getSize(); l++){
@@ -457,7 +440,6 @@ public class BattleShip extends JFrame implements ActionListener{
                         JLabel ship = new JLabel(shipIcons[index][2][l]);
                         p2.add(ship);
                         ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-                        ship.setOpaque(true);
                     }
                 }else{
                     for(int l = 0; l < s.getSize(); l++){
@@ -465,7 +447,6 @@ public class BattleShip extends JFrame implements ActionListener{
                         JLabel ship = new JLabel(shipIcons[index][3][l]);
                         p2.add(ship);
                         ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-                        ship.setOpaque(true);
                     }
                 }
             }

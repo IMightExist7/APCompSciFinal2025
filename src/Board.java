@@ -39,7 +39,7 @@ public class Board {
         }
         if(ships[i]==null)
             ships[i]=s;
-            System.out.println(ships[i].toString());
+            //System.out.println(ships[i].toString());
         
     }
 
