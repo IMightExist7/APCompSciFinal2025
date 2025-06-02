@@ -30,19 +30,19 @@ public class Ship {
         location[0] = start;
         if(direction.toUpperCase().equals("N")){
             for(int i = 0; i < size; i++){
-                location[i] = b.getTile(start.getX(), start.getY() - i);
+                location[i] = b.getTile(start.getY() - i, start.getX());
             }
         }else if(direction.toUpperCase().equals("E")){
             for(int i = 0; i < size; i++){
-                location[i] = b.getTile(start.getX() + i, start.getY());
+                location[i] = b.getTile(start.getY(), start.getX() + i);
             }
         }else if(direction.toUpperCase().equals("S")){
             for(int i = 0; i < size; i++){
-                location[i] = b.getTile(start.getX(), start.getY() + i);
+                location[i] = b.getTile(start.getY() + i, start.getX());
             }
         }else{
             for(int i = 0; i < size; i++){
-                location[i] = b.getTile(start.getX() - i, start.getY());
+                location[i] = b.getTile(start.getY(), start.getX() - i);
             }
         }
     }
