@@ -1,6 +1,7 @@
 public class Ship {
     private int size;
     private Tile[] location;
+    private String direction;
     private boolean submarine;
     
 
@@ -24,22 +25,24 @@ public class Ship {
      *              (N/E/S/W)
      */
     public void setLocation(Board b, Tile start, String direction){
+        this.direction = direction;
+        System.out.println(direction);
         location[0] = start;
         if(direction.toUpperCase().equals("N")){
-            for(int i = 1; i < size; i++){
-                location[i] = b.getTile(start.getX(), start.getY()+i);
+            for(int i = 0; i < size; i++){
+                location[i] = b.getTile(start.getY() - i, start.getX());
             }
         }else if(direction.toUpperCase().equals("E")){
-            for(int i = 1; i < size; i++){
-                location[i] = b.getTile(start.getX() + i, start.getY());
+            for(int i = 0; i < size; i++){
+                location[i] = b.getTile(start.getY(), start.getX() + i);
             }
         }else if(direction.toUpperCase().equals("S")){
-            for(int i = 1; i < size; i++){
-                location[i] = b.getTile(start.getX(), start.getY() - i);
+            for(int i = 0; i < size; i++){
+                location[i] = b.getTile(start.getY() + i, start.getX());
             }
         }else{
-            for(int i = 1; i < size; i++){
-                location[i] = b.getTile(start.getX() + i, start.getY());
+            for(int i = 0; i < size; i++){
+                location[i] = b.getTile(start.getY(), start.getX() - i);
             }
         }
     }
@@ -47,6 +50,15 @@ public class Ship {
 
     public Tile[] getLocation(){
         return location;
+    }
+
+    public int getSize(){
+        return size;
+    }
+
+
+    public String getDirection(){
+        return direction;
     }
 
 
