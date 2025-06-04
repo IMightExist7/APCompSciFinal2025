@@ -25,6 +25,8 @@ public class BattleShip extends JFrame implements ActionListener{
     private JPanel p2;
 
     private JPanel p3;
+
+    private JPanel p4;
     /** Length of Tiles*/
     private int tileLength;
     /** Height of Tiles*/
@@ -116,6 +118,7 @@ public class BattleShip extends JFrame implements ActionListener{
         p1 = new JPanel();
         p2 = new JPanel();
         p3 = new JPanel();
+        p4 = new JPanel();
         this.setContentPane(panel);
         initDisplay();
     }
@@ -140,6 +143,7 @@ public class BattleShip extends JFrame implements ActionListener{
         panel.add(p1, 1);
         panel.add(p2, 2);
         panel.add(p3, 3);
+        panel.add(p4, 4);
 
         tileHeight = 50;
         tileLength = 50;
@@ -148,14 +152,17 @@ public class BattleShip extends JFrame implements ActionListener{
         p1.setSize(1920, 1080);
         p2.setSize(1920, 1080);
         p3.setSize(1920, 1080);
+        p4.setSize(1920, 1080);
         
         
         p1.setLayout(null);
         p2.setLayout(null);
         p3.setLayout(null);
+        p4.setLayout(null);
 
         p2.setOpaque(false);
         p3.setOpaque(false);
+        p4.setOpaque(false);
 
         ImageIcon t1 = new ImageIcon("img/t1.png");
 
@@ -376,7 +383,7 @@ public class BattleShip extends JFrame implements ActionListener{
         }
         panel.setLayer(p1, 1);
         panel.setLayer(p2, 2);
-        Background b = new Background(panel, p1, p2, p3);
+        Background b = new Background(panel, p1, p2, p3, p4);
         new Thread(b).start();
     }
 
@@ -417,7 +424,7 @@ public class BattleShip extends JFrame implements ActionListener{
             signalError();
         }else{
             pop = new JButton();
-            p3.add(pop);
+            p4.add(pop);
             pop.setOpaque(true);
             pop.setBounds(600, 400, 300, 200);
             pop.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -451,27 +458,31 @@ public class BattleShip extends JFrame implements ActionListener{
 
     private void nextTurn(){
         if(turn > 1){
-            p3.remove(pop);
+            p4.remove(pop);
         }
         turn++;
         overlay = new JLabel();
         ImageIcon hit = new ImageIcon("img/hit.png");
         ImageIcon miss = new ImageIcon("img/miss.png");
-        p3.add(overlay);
-        p3.setOpaque(true);
+        p4.add(overlay);
+        p4.setOpaque(true);
         overlay.setBackground(Color.WHITE);
         overlay.setOpaque(true);
         next = new JButton();
-        p3.add(next);
+        p4.add(next);
         next.addActionListener(e -> cont());
         next.setBounds(600, 400, 300, 200);
         next.setText("Next Turn");
         p2.removeAll();
+        p3.removeAll();
         Board curBoard;
+        Board enemy;
         if(turn%2 == 0){
             curBoard = board2;
+            enemy = board1;
         }else{
             curBoard = board1;
+            enemy = board2;
         }
         if(turn > 1){
             for(Ship s: curBoard.getShips()){
@@ -510,6 +521,42 @@ public class BattleShip extends JFrame implements ActionListener{
                 }
             }
         }
+        for(int r = 0; r < board1.getSide(); r++){
+            for(int c = 0; c < board1.getSide(); c++){
+                Tile curTile;
+                curTile = curBoard.getTile(r, c);
+                if(curTile.getHit()){
+                    Point loc = gridRight[r][c].getLocation();
+                    JLabel mark = new JLabel();
+                    p3.add(mark);
+                    mark.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
+                    if(isShip(curBoard, c, r)){
+                        mark.setIcon(hit);
+                    }else{
+                        mark.setIcon(miss);
+                    }
+                }
+            }
+        }
+
+        for(int r = 0; r < board1.getSide(); r++){
+            for(int c = 0; c < board1.getSide(); c++){
+                Tile curTile;
+                curTile = enemy.getTile(r, c);
+                if(curTile.getHit()){
+                    Point loc = gridLeft[r][c].getLocation();
+                    JLabel mark = new JLabel();
+                    p3.add(mark);
+                    mark.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
+                    if(isShip(curBoard, c, r)){
+                        mark.setIcon(hit);
+                    }else{
+                        mark.setIcon(miss);
+                    }
+                }
+            }
+        }
+
         Board temp = board1;
         board1 = board2;
         board2 = temp;
@@ -517,9 +564,9 @@ public class BattleShip extends JFrame implements ActionListener{
 
 
     private void cont(){
-        p3.setOpaque(false);
-        p3.remove(overlay);
-        p3.remove(next);
+        p4.setOpaque(false);
+        p4.remove(overlay);
+        p4.remove(next);
     }
 
 
