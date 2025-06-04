@@ -307,7 +307,7 @@ public class BattleShip extends JFrame implements ActionListener{
                 }
                 else if(e.getSource().equals(gridLeft[r][c])){
                     int index = -1;
-                    if(placeMode==true && curShip!=null) {
+                    if(placeMode==true && curShip!=null && !checkOverlap(board1, curShip, r, c)) {
                         index = curShip.getSize() - 1;
                         if(curShip.isSub()){
                             index = 0;
@@ -323,6 +323,8 @@ public class BattleShip extends JFrame implements ActionListener{
                                 JLabel ship = new JLabel(shipIcons[index][0][i]);
                                 p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
+
+
                             }
                             placeMode=!placeMode;
                             board1.placeShip(curShip);
@@ -455,6 +457,38 @@ public class BattleShip extends JFrame implements ActionListener{
         }
     }
 
+    private boolean checkOverlap(Board board, Ship s, int r, int c) {
+        Ship[] checkedShips = board.getShips(); 
+        Tile[] location;
+        for (int j=0;j<checkedShips.length;j++){
+            if(checkedShips[j]!=null){
+                location = checkedShips[j].getLocation();
+                if(directions[direction].toUpperCase().equals("N")){
+                    for(int i = 0; i < checkedShips[j].getSize(); i++){
+                        if(location[i].equals(board.getTile(r-j, c)))
+                            return true;
+                    }
+                }else if(directions[direction].toUpperCase().equals("E")){
+                    for(int i = 0; i < s.getSize(); i++){
+                        if(location[i].equals(board.getTile(r, c+j)))
+                            return true;
+                    }
+                    
+                }else if(directions[direction].toUpperCase().equals("S")){
+                    for(int i = 0; i < s.getSize(); i++){
+                        if(location[i].equals(board.getTile(r+j, c)))
+                            return true;
+                    }
+                }else{
+                    for(int i = 0; i < s.getSize(); i++){
+                        if(location[i].equals(board.getTile(r, c-j)))
+                            return true;
+                   }
+                }
+            }
+        }
+        return false;
+    }
 
     private void nextTurn(){
         if(turn > 1){

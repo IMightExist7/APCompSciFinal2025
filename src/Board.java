@@ -17,7 +17,6 @@ public class Board {
             }
         }
         ships = new Ship[5];
-
     }
 
 
