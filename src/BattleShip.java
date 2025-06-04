@@ -55,6 +55,8 @@ public class BattleShip extends JFrame implements ActionListener{
     private Ship[] ships2;
     private Ship curShip;
 
+    private JButton pop;
+
     private ImageIcon[][][] shipIcons = {
                                     {
                                         {new ImageIcon("img/s3-y/N/0.png"), new ImageIcon("img/s3-y/N/1.png"), new ImageIcon("img/s3-y/N/2.png")}, 
@@ -299,7 +301,6 @@ public class BattleShip extends JFrame implements ActionListener{
                 else if(e.getSource().equals(gridLeft[r][c])){
                     int index = -1;
                     if(placeMode==true && curShip!=null) {
-                        System.out.println(r +" " + c);
                         index = curShip.getSize() - 1;
                         if(curShip.isSub()){
                             index = 0;
@@ -415,37 +416,47 @@ public class BattleShip extends JFrame implements ActionListener{
         if(x == -1){
             signalError();
         }else{
-            JLabel pop = new JLabel();
+            pop = new JButton();
             p3.add(pop);
+            pop.setOpaque(true);
+            pop.setBounds(600, 400, 300, 200);
+            pop.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            pop.setVisible(true);
+            pop.addActionListener(e -> nextTurn());
             if(turn%2 == 0){
                 board2.getTile(x, y).setHit(true);
                 if(isShip(board2, x, y)){
                     pop.setText("HIT");
+                    pop.setBackground(Color.RED);
                 }else{
                     pop.setText("MISS");
+                    pop.setBackground(Color.WHITE);
                 }
             }else{
                 board1.getTile(x, y).setHit(true);
                 if(isShip(board1, x, y)){
                     pop.setText("HIT");
+                    pop.setBackground(Color.RED);
                 }else{
                     pop.setText("MISS");
+                    pop.setBackground(Color.WHITE);
                 }
             }
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            p3.remove(pop);
-            nextTurn();
+            
+
+            
         }
     }
 
 
     private void nextTurn(){
+        if(turn > 1){
+            p3.remove(pop);
+        }
         turn++;
         overlay = new JLabel();
+        ImageIcon hit = new ImageIcon("img/hit.png");
+        ImageIcon miss = new ImageIcon("img/miss.png");
         p3.add(overlay);
         p3.setOpaque(true);
         overlay.setBackground(Color.WHITE);
@@ -468,7 +479,6 @@ public class BattleShip extends JFrame implements ActionListener{
                 if(s.isSub()){
                     index = 0;
                 }
-                System.out.println(s.getLocation()[0].getY() + " " + s.getLocation()[0].getX() + " " + s.getDirection().toUpperCase());
                 if(s.getDirection().toUpperCase().equals("N")){
                     for(int l = 0; l < s.getSize(); l++){
                         Point loc = gridLeft[s.getLocation()[l].getY()][s.getLocation()[l].getX()].getLocation();
