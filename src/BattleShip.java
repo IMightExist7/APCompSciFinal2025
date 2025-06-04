@@ -276,7 +276,7 @@ public class BattleShip extends JFrame implements ActionListener{
                 }
                 else if(e.getSource().equals(gridLeft[r][c])){
                     int index = -1;
-                    if(placeMode==true && curShip!=null) {
+                    if(placeMode==true && curShip!=null && !checkOverlap(board1, curShip, r, c)) {
                         System.out.println(c +" " + r);
                         index = curShip.getSize() - 1;
                         if(index == 2 && curShip.isSub()){
@@ -290,11 +290,7 @@ public class BattleShip extends JFrame implements ActionListener{
                                 p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
 
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                ship.setOpaque(true);
-
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                board1.placeShip(curShip);    
+  
                             }
                         }else if(directions[direction].toUpperCase().equals("E") && c+curShip.getSize()-1<board1.getSide()){
                             for(int i = 0; i < curShip.getSize(); i++){
@@ -303,9 +299,9 @@ public class BattleShip extends JFrame implements ActionListener{
                                 p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                                 ship.setOpaque(true);
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                board1.placeShip(curShip);
+                                
                             }
+
                         }else if(directions[direction].toUpperCase().equals("S") && r+curShip.getSize()-1<board1.getSide()){
                             for(int i = 0; i < curShip.getSize(); i++){
                                 Point loc = gridLeft[r+i][c].getLocation();
@@ -313,8 +309,6 @@ public class BattleShip extends JFrame implements ActionListener{
                                 p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                                 ship.setOpaque(true);
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                board1.placeShip(curShip);
                                 
                             }
                         }else if(directions[direction].toUpperCase().equals("W") && c-curShip.getSize()+1>=0){
@@ -324,15 +318,16 @@ public class BattleShip extends JFrame implements ActionListener{
                                 p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                                 ship.setOpaque(true);
-                              
-                                curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
-                                board1.placeShip(curShip);
+                                
                             }
+                            
                         }
+                        curShip.setLocation(board2, board2.getTile(r,c), directions[direction]);
+                        board1.placeShip(curShip);
+                        placeMode=!placeMode;
+                        directionButton.setVisible(placeMode);
+                        curShip=null;
                     }
-                    placeMode=!placeMode;
-                    directionButton.setVisible(placeMode);
-                    curShip=null;
                     if(index == 1){
                         nextPlace();
                     }
@@ -409,6 +404,38 @@ public class BattleShip extends JFrame implements ActionListener{
         }
     }
 
+    private boolean checkOverlap(Board board, Ship s, int r, int c) {
+        Ship[] checkedShips = board.getShips(); 
+        Tile[] location;
+        for (int j=0;j<checkedShips.length;j++){
+            if(checkedShips[j]!=null){
+                location = checkedShips[j].getLocation();
+                if(directions[direction].toUpperCase().equals("N")){
+                    for(int i = 0; i < checkedShips[j].getSize(); i++){
+                        if(location[i].equals(board.getTile(r-j, c)))
+                            return true;
+                    }
+                }else if(directions[direction].toUpperCase().equals("E")){
+                    for(int i = 0; i < s.getSize(); i++){
+                        if(location[i].equals(board.getTile(r, c+j)))
+                            return true;
+                    }
+                    
+                }else if(directions[direction].toUpperCase().equals("S")){
+                    for(int i = 0; i < s.getSize(); i++){
+                        if(location[i].equals(board.getTile(r+j, c)))
+                            return true;
+                    }
+                }else{
+                    for(int i = 0; i < s.getSize(); i++){
+                        if(location[i].equals(board.getTile(r, c-j)))
+                            return true;
+                   }
+                }
+            }
+        }
+        return false;
+    }
 
     private void nextTurn(){
         turn++;
