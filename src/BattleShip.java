@@ -508,6 +508,19 @@ public class BattleShip extends JFrame implements ActionListener{
             p4.remove(pop);
         }
         turn++;
+        Board curBoard;
+        Board enemy;
+        if(turn%2 == 0){
+            curBoard = board2;
+            enemy = board1;
+        }else{
+            curBoard = board1;
+            enemy = board2;
+        }
+        if(checkWin(enemy)){
+            winScreen();
+            return;
+        }
         overlay = new JLabel();
         ImageIcon hit = new ImageIcon("img/hit.png");
         ImageIcon miss = new ImageIcon("img/miss.png");
@@ -523,15 +536,6 @@ public class BattleShip extends JFrame implements ActionListener{
         next.setText("Next Turn");
         p2.removeAll();
         p3.removeAll();
-        Board curBoard;
-        Board enemy;
-        if(turn%2 == 0){
-            curBoard = board2;
-            enemy = board1;
-        }else{
-            curBoard = board1;
-            enemy = board2;
-        }
         if(turn > 1){
             for(Ship s: curBoard.getShips()){
                 int index = s.getSize()-1;
@@ -609,6 +613,27 @@ public class BattleShip extends JFrame implements ActionListener{
         Board temp = board1;
         board1 = board2;
         board2 = temp;
+    }
+
+
+    public boolean checkWin(Board enemy){
+        for(Ship s: enemy.getShips()){
+            for(Tile t: s.getLocation()){
+                if(!t.getHit()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void winScreen(){
+        JLabel end = new JLabel();
+        p4.add(end);
+        end.setOpaque(true);
+        end.setBounds(0, 0, 1920, 1080);
+        end.setBackground(Color.CYAN);
+        end.setText("YOU WIN!!");
     }
 
 
