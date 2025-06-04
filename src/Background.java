@@ -6,13 +6,15 @@ public class Background implements Runnable{
     private JPanel p1;
     private JPanel p2;
     private JPanel p3;
+    private JPanel p4;
 
 
-    public Background(JLayeredPane p, JPanel a, JPanel b, JPanel c){
+    public Background(JLayeredPane p, JPanel a, JPanel b, JPanel c, JPanel d){
         panel = p;
         p1 = a;
         p2 = b;
         p3 = c;
+        p4 = d;
     }
 
     public void run(){
@@ -20,6 +22,7 @@ public class Background implements Runnable{
             panel.setLayer(p1, 1);
             panel.setLayer(p2, 2);
             panel.setLayer(p3, 3);
+            panel.setLayer(p4, 4);
         }
     }
 
