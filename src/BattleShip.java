@@ -517,7 +517,7 @@ public class BattleShip extends JFrame implements ActionListener{
             curBoard = board1;
             enemy = board2;
         }
-        if(checkWin(enemy)){
+        if(turn > 1 && checkWin(enemy)){
             winScreen();
             return;
         }
