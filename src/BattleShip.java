@@ -340,8 +340,6 @@ public class BattleShip extends JFrame implements ActionListener{
                                 JLabel ship = new JLabel(shipIcons[index][0][i]);
                                 p2.add(ship);
                                 ship.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-
-
                             }
                             placeMode=!placeMode;
                             temp.placeShip(curShip);
@@ -435,9 +433,15 @@ public class BattleShip extends JFrame implements ActionListener{
             pop.setBounds(600, 400, 300, 200);
             pop.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             pop.setVisible(true);
-            pop.addActionListener(e -> nextTurn());
+            Board curBoard;
             if(turn%2 == 0){
-                board2.getTile(x, y).setHit(true);
+                curBoard = board2;
+            }else{
+                curBoard = board1;
+            }
+            pop.addActionListener(e -> result(curBoard));
+            if(turn%2 == 0){
+                curBoard.getTile(y, x).setHit(true);
                 if(isShip(board2, x, y)){
                     pop.setText("HIT");
                     pop.setBackground(Color.RED);
@@ -446,7 +450,7 @@ public class BattleShip extends JFrame implements ActionListener{
                     pop.setBackground(Color.WHITE);
                 }
             }else{
-                board1.getTile(x, y).setHit(true);
+                curBoard.getTile(y, x).setHit(true);
                 if(isShip(board1, x, y)){
                     pop.setText("HIT");
                     pop.setBackground(Color.RED);
@@ -509,10 +513,6 @@ public class BattleShip extends JFrame implements ActionListener{
             curBoard = board2;
             enemy = board1;
         }
-        if(turn > 1 && checkWin(enemy)){
-            winScreen();
-            return;
-        }
         overlay = new JLabel();
         ImageIcon hit = new ImageIcon("img/hit.png");
         ImageIcon miss = new ImageIcon("img/miss.png");
@@ -568,15 +568,17 @@ public class BattleShip extends JFrame implements ActionListener{
         for(int r = 0; r < board1.getSide(); r++){
             for(int c = 0; c < board1.getSide(); c++){
                 Tile curTile;
-                curTile = enemy.getTile(c, r);
+                curTile = enemy.getTile(r, c);
                 gridRight[r][c].setIcon(t2);
                 if(curTile.getHit()){
                     Point loc = gridRight[r][c].getLocation();
                     JLabel mark = new JLabel();
                     p3.add(mark);
                     mark.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
-                    if(isShip(curBoard, c, r)){
+                    if(isShip(enemy, c, r)){
                         mark.setIcon(hit);
+                        System.out.println(r + " " + c);
+                        System.out.println(enemy.getShips()[0].getLocation()[0].getHit());
                     }else{
                         mark.setIcon(miss);
                     }
@@ -587,7 +589,7 @@ public class BattleShip extends JFrame implements ActionListener{
         for(int r = 0; r < board1.getSide(); r++){
             for(int c = 0; c < board1.getSide(); c++){
                 Tile curTile;
-                curTile = curBoard.getTile(c, r);
+                curTile = curBoard.getTile(r, c);
                 if(curTile.getHit()){
                     Point loc = gridLeft[r][c].getLocation();
                     JLabel mark = new JLabel();
@@ -616,8 +618,19 @@ public class BattleShip extends JFrame implements ActionListener{
         return true;
     }
 
+    public void result(Board enemy){
+        boolean win = checkWin(enemy);
+        if(!win){
+            nextTurn();
+        }else{
+            winScreen();
+        }
+    }
+
     public void winScreen(){
+        p4.remove(pop);
         JLabel end = new JLabel();
+        p4.setOpaque(true);
         p4.add(end);
         end.setOpaque(true);
         end.setBounds(0, 0, 1920, 1080);
