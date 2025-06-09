@@ -577,8 +577,6 @@ public class BattleShip extends JFrame implements ActionListener{
                     mark.setBounds((int)loc.getX(), (int)loc.getY(), 50, 50);
                     if(isShip(enemy, c, r)){
                         mark.setIcon(hit);
-                        System.out.println(r + " " + c);
-                        System.out.println(enemy.getShips()[0].getLocation()[0].getHit());
                     }else{
                         mark.setIcon(miss);
                     }
