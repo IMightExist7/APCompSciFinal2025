@@ -43,17 +43,27 @@ public class Board {
     }
 
     
-
+    /**
+     * Gets the side length of the Board.
+     * @return side.
+     */
     public int getSide() {
         return side;
     }
 
-
+    /**
+     * Sets the given Tile to hit.
+     * @param r y-coordinate of the Tile.
+     * @param c x-coordinate of the tile.
+     */
     public void hit(int r, int c){
         getTile(c, r).setHit(true);
     }
 
-
+    /**
+     * Gets the Ships on the Board.
+     * @return an Array of the Ships on the Board.
+     */
     public Ship[] getShips(){
         return ships;
     }
