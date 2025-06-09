@@ -10,6 +10,16 @@ public class Background implements Runnable{
     private JPanel p4;
 
 
+
+    /**
+     * Constuctor.
+     * @param p The LayeredPane.
+     * @param z Lowest layer.
+     * @param a 1st layer.
+     * @param b 2nd layer.
+     * @param c 3rd layer.
+     * @param d 4th layer.
+     */
     public Background(JLayeredPane p, JPanel z, JPanel a, JPanel b, JPanel c, JPanel d){
         panel = p;
         p0 = z;
@@ -19,6 +29,11 @@ public class Background implements Runnable{
         p4 = d;
     }
 
+
+
+    /**
+     * Keeps layers in their correct positions.
+     */
     public void run(){
         while(true){
             panel.setLayer(p0, 0);
