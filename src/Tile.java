@@ -39,12 +39,19 @@ public class Tile {
         return hit;
     }
 
-
+    /**
+     * Sets whether or not the Tile is hit.
+     * @param h whether the Tile is hit or not.
+     */
     public void setHit(boolean h){
         hit = h;
     }
 
-
+    /**
+     * Determines if a Tile is equal to another Tile.
+     * @param t the Tile it is being compared to.
+     * @return  tue if they are equal, false otherwise.
+     */
     public boolean equals(Tile t){
         return(x == t.getX()) && (y == t.getY());
     }

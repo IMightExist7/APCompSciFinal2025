@@ -46,21 +46,35 @@ public class Ship {
         }
     }
 
-
+    /**
+     * Gets the location of the Ship.
+     * @return An Array of Tiles.
+     */
     public Tile[] getLocation(){
         return location;
     }
 
+
+    /**
+     * Gets the size of the Ship.
+     * @return size.
+     */
     public int getSize(){
         return size;
     }
 
-
+    /**
+     * Gets the direction of the Ship.
+     * @return direction.
+     */
     public String getDirection(){
         return direction;
     }
 
-
+    /**
+     * Gets whether the Ship is or is not a submarine.
+     * @return submarine.
+     */
     public boolean isSub(){
         return submarine;
     }
