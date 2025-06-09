@@ -26,7 +26,6 @@ public class Ship {
      */
     public void setLocation(Board b, Tile start, String direction){
         this.direction = direction;
-        System.out.println(direction);
         location[0] = start;
         if(direction.toUpperCase().equals("N")){
             for(int i = 0; i < size; i++){
@@ -47,21 +46,35 @@ public class Ship {
         }
     }
 
-
+    /**
+     * Gets the location of the Ship.
+     * @return An Array of Tiles.
+     */
     public Tile[] getLocation(){
         return location;
     }
 
+
+    /**
+     * Gets the size of the Ship.
+     * @return size.
+     */
     public int getSize(){
         return size;
     }
 
-
+    /**
+     * Gets the direction of the Ship.
+     * @return direction.
+     */
     public String getDirection(){
         return direction;
     }
 
-
+    /**
+     * Gets whether the Ship is or is not a submarine.
+     * @return submarine.
+     */
     public boolean isSub(){
         return submarine;
     }
