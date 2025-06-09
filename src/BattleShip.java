@@ -399,11 +399,8 @@ public class BattleShip extends JFrame implements ActionListener{
                             placeMode=!placeMode;
                             temp.placeShip(curShip);
                         }
-                        
-                        
                     }
                     directionButton.setVisible(placeMode);
-                    curShip=null;
                     if(index == 1){
                         nextPlace();
                     }
@@ -522,29 +519,30 @@ public class BattleShip extends JFrame implements ActionListener{
      */
     private boolean checkOverlap(Board board, Ship s, int r, int c) {
         Ship[] checkedShips = board.getShips(); 
-        Tile[] location;
-        for (int j=0;j<checkedShips.length;j++){
+        Tile[] checkedLocation;
+        for(int j=0;j<checkedShips.length;j++){
             if(checkedShips[j]!=null){
-                location = checkedShips[j].getLocation();
+                checkedLocation = checkedShips[j].getLocation();
                 if(directions[direction].toUpperCase().equals("N")){
                     for(int i = 0; i < checkedShips[j].getSize(); i++){
-                        if(location[i].equals(board.getTile(r-j, c)))
+                        System.out.println(i);
+                        if(checkedLocation[i].getY()>r-s.getSize() && checkedLocation[i].getY()<=r && checkedLocation[i].getX()==c)
                             return true;
                     }
                 }else if(directions[direction].toUpperCase().equals("E")){
-                    for(int i = 0; i < s.getSize(); i++){
-                        if(location[i].equals(board.getTile(r, c+j)))
+                    for(int i = 0; i < checkedShips[j].getSize(); i++){
+                        System.out.println(i);
+                        if(checkedLocation[i].getY()==r && checkedLocation[i].getX()<c+s.getSize() && checkedLocation[i].getX()>=c)
                             return true;
                     }
-                    
                 }else if(directions[direction].toUpperCase().equals("S")){
-                    for(int i = 0; i < s.getSize(); i++){
-                        if(location[i].equals(board.getTile(r+j, c)))
+                    for(int i = 0; i < checkedShips[j].getSize(); i++){
+                        if(checkedLocation[i].getY()<r+s.getSize() && checkedLocation[i].getY()>=r && checkedLocation[i].getX()==c)
                             return true;
                     }
                 }else{
-                    for(int i = 0; i < s.getSize(); i++){
-                        if(location[i].equals(board.getTile(r, c-j)))
+                    for(int i = 0; i < checkedShips[j].getSize(); i++){
+                        if(checkedLocation[i].getY()==r && checkedLocation[i].getX()>c-s.getSize() && checkedLocation[i].getX()<=c)
                             return true;
                    }
                 }
