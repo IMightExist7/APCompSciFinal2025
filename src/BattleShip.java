@@ -93,7 +93,11 @@ public class BattleShip extends JFrame implements ActionListener{
                                         {new ImageIcon("img/s5/W/0.png"), new ImageIcon("img/s5/W/1.png"), new ImageIcon("img/s5/W/2.png"), new ImageIcon("img/s5/W/3.png"), new ImageIcon("img/s5/W/4.png")}
                                     }};
 
-    
+    /**
+     * Constuctor for the BattleShip class.
+     * @param b1 Player 1's board.
+     * @param b2 Player 2's board.
+     */
     public BattleShip(Board b1, Board b2){
         board1 = b1;
         board2 = b2;
@@ -127,6 +131,7 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+
     /**
      * Run the game.
      */
@@ -139,6 +144,10 @@ public class BattleShip extends JFrame implements ActionListener{
     }  
 
 
+
+    /**
+     * Initialize the game display.
+     */
     public void initDisplay(){
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -244,6 +253,11 @@ public class BattleShip extends JFrame implements ActionListener{
 
     }
 
+
+
+    /**
+     * Change the direction of the ship about to be placed.
+     */
     public void directionChange(){
         if(direction+1!=4)
             direction++;
@@ -254,6 +268,10 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+
+    /**
+     * Set curShip to the next ship to be placed.
+     */
     public void shipAdd()
     {
         if(!placeMode){
@@ -284,6 +302,13 @@ public class BattleShip extends JFrame implements ActionListener{
 
 
 
+    /**
+     * Does 2 things, which one depends on the stage of the game, and where the source is.
+     * 1. Selects tiles on the enemy's board.
+     *  -Happens after ship placement, source is enemy's board.
+     * 2. Places ships on the current player's board.
+     *  -Happens during ship placement, source is current player's board.
+     */
     public void actionPerformed(ActionEvent e) {
         ImageIcon s = new ImageIcon("img/t2/t2-selected.png");
         ImageIcon t2 = new ImageIcon("img/t2/t2.png");
@@ -391,6 +416,10 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+
+    /**
+     * Transitions game out of ship placement mode.
+     */
     private void nextPlace(){
         if(turn == 1){
             fire.setVisible(true);
@@ -400,6 +429,15 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+
+    /**
+     * Determines whether or not a Tile at coordinates (x, y)
+     * on Board b is a ship or not.
+     * @param b the Board being looked at.
+     * @param x the x-coordinate of the Tile.
+     * @param y the y-coordiate of the Tile.
+     * @return  true if the Tile is a ship, false otherwise.
+     */
     private boolean isShip(Board b, int x, int y){
         for(Ship s: b.getShips()){
             for(Tile t: s.getLocation()){
@@ -412,6 +450,12 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+
+    /**
+     * Sets the selected Tile to hit.
+     * Creates a popup that reads if the Tile hit was a ship or not.
+     * Calls result()
+     */
     private void fire(){
         int x = -1;
         int y = -1;
@@ -465,6 +509,17 @@ public class BattleShip extends JFrame implements ActionListener{
         }
     }
 
+
+
+    /**
+     * Checks whether a Ship to be placed would overlap with another Ship.
+     * @param board the board the Ship is being placed on.
+     * @param s the ship being placed.
+     * @param r the y-coordinate of the 'source' Tile of the Ship.
+     * @param c the x-coordinate of the 'source' Tile of the Ship.
+     * @return false if the Ship being placed does not overlap with any
+     *          other Ships, true otherwise.
+     */
     private boolean checkOverlap(Board board, Ship s, int r, int c) {
         Ship[] checkedShips = board.getShips(); 
         Tile[] location;
@@ -498,6 +553,15 @@ public class BattleShip extends JFrame implements ActionListener{
         return false;
     }
 
+
+
+    /*
+     * Moves to the next turn of the game.
+     * Switches which Tile grid represents which board.
+     * Resets Ships shown to the other player's.
+     * Resets hit markers to those of the other player.
+     * Creates an overlay blocking the game from sight until a button is pressed.
+     */
     private void nextTurn(){
         if(turn > 1){
             p4.remove(pop);
@@ -605,6 +669,13 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+
+    /**
+     * Checks wheter or not the game has been won.
+     * @param enemy the enemy's board.
+     * @return true if the current player has won the game, 
+     *          false otherwise.
+     */
     public boolean checkWin(Board enemy){
         for(Ship s: enemy.getShips()){
             for(Tile t: s.getLocation()){
@@ -616,6 +687,12 @@ public class BattleShip extends JFrame implements ActionListener{
         return true;
     }
 
+
+
+    /**
+     * If the game has not been won, calls nextTurn(),
+     * otherwise, calls winScreen()
+     */
     public void result(Board enemy){
         boolean win = checkWin(enemy);
         if(!win){
@@ -625,6 +702,11 @@ public class BattleShip extends JFrame implements ActionListener{
         }
     }
 
+
+
+    /**
+     * Covers the game in an overlay proclaiming "YOU WIN!!"
+     */
     public void winScreen(){
         p4.remove(pop);
         JLabel end = new JLabel();
@@ -637,6 +719,11 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+
+
+    /**
+     * Gets rid of the overlap in between turns.
+     */
     private void cont(){
         p4.setOpaque(false);
         p4.remove(overlay);
@@ -644,6 +731,10 @@ public class BattleShip extends JFrame implements ActionListener{
     }
 
 
+
+    /**
+     * Plays a beep sound.
+     */
     private void signalError() {
 		Toolkit t = panel.getToolkit();
 		t.beep();
