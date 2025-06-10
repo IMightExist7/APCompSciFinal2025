@@ -61,6 +61,8 @@ public class BattleShip extends JFrame implements ActionListener{
 
     private JButton pop;
 
+    private ImageIcon[] dirIcons = {new ImageIcon("img/direction/N.png"), new ImageIcon("img/direction/E.png"), new ImageIcon("img/direction/S.png"), new ImageIcon("img/direction/W.png")};
+
     private ImageIcon[][][] shipIcons = {
                                     {
                                         {new ImageIcon("img/s3-y/N/0.png"), new ImageIcon("img/s3-y/N/1.png"), new ImageIcon("img/s3-y/N/2.png")}, 
@@ -223,19 +225,20 @@ public class BattleShip extends JFrame implements ActionListener{
             }
         }
 
-        shipButton = new JButton();
-        shipButton.setText("New Ship");
+        ImageIcon nSB = new ImageIcon("img/newS.png");
+
+        shipButton = new JButton(nSB);
         p1.add(shipButton);
         shipButton.setBounds(0,0, 100, 150);
         shipButton.setOpaque(true);
         shipButton.addActionListener(e -> shipAdd());
 
-        fire = new JButton();
-        fire.setText("FIRE");
+        ImageIcon fB = new ImageIcon("img/fire.png");
+
+        fire = new JButton(fB);
         p1.add(fire);
         fire.setBounds(tileLength+625,675, 150, 100);
         fire.setOpaque(true);
-        fire.setBackground(Color.red);
         fire.addActionListener(e -> fire());       
         fire.setVisible(false);
 
@@ -243,10 +246,11 @@ public class BattleShip extends JFrame implements ActionListener{
         this.setVisible(true);
         this.isFocusableWindow();
 
-        directionButton = new JButton();
+        ImageIcon dir1 = new ImageIcon("img/direction/N.png");
+
+        directionButton = new JButton(dir1);
         p1.add(directionButton);
         directionButton.setBounds(0,200,100,150);
-        directionButton.setText("N");
         directionButton.addActionListener(e -> directionChange());
         directionButton.setVisible(false);  
 
@@ -263,7 +267,7 @@ public class BattleShip extends JFrame implements ActionListener{
             direction++;
         else
             direction=0;
-        directionButton.setText(directions[direction].toUpperCase());
+        directionButton.setIcon(dirIcons[direction]);
 
     }
 
@@ -525,13 +529,11 @@ public class BattleShip extends JFrame implements ActionListener{
                 checkedLocation = checkedShips[j].getLocation();
                 if(directions[direction].toUpperCase().equals("N")){
                     for(int i = 0; i < checkedShips[j].getSize(); i++){
-                        System.out.println(i);
                         if(checkedLocation[i].getY()>r-s.getSize() && checkedLocation[i].getY()<=r && checkedLocation[i].getX()==c)
                             return true;
                     }
                 }else if(directions[direction].toUpperCase().equals("E")){
                     for(int i = 0; i < checkedShips[j].getSize(); i++){
-                        System.out.println(i);
                         if(checkedLocation[i].getY()==r && checkedLocation[i].getX()<c+s.getSize() && checkedLocation[i].getX()>=c)
                             return true;
                     }
