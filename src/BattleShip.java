@@ -706,14 +706,13 @@ public class BattleShip extends JFrame implements ActionListener{
      * Covers the game in an overlay proclaiming "YOU WIN!!"
      */
     public void winScreen(){
+        ImageIcon win = new ImageIcon("img/win.png");
         p4.remove(pop);
-        JLabel end = new JLabel();
+        JLabel end = new JLabel(win);
         p4.setOpaque(true);
         p4.add(end);
         end.setOpaque(true);
         end.setBounds(0, 0, 1920, 1080);
-        end.setBackground(Color.CYAN);
-        end.setText("YOU WIN!!");
     }
 
 
