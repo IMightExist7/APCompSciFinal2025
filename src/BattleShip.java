@@ -252,7 +252,14 @@ public class BattleShip extends JFrame implements ActionListener{
         p1.add(directionButton);
         directionButton.setBounds(0,200,100,150);
         directionButton.addActionListener(e -> directionChange());
-        directionButton.setVisible(false);  
+        directionButton.setVisible(false);
+
+        ImageIcon titleIcon = new ImageIcon("img/title.png");
+
+        JLabel title = new JLabel(titleIcon);
+        p1.add(title);
+        title.setBounds(tileLength+325, 0, 750, 150);
+        
 
 
     }
