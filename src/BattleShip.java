@@ -217,7 +217,7 @@ public class BattleShip extends JFrame implements ActionListener{
         shipButton = new JButton();
         shipButton.setText("New Ship");
         p1.add(shipButton);
-        shipButton.setBounds(0,0, 100, 150);
+        shipButton.setBounds(600,700, 300, 150);
         shipButton.setOpaque(true);
         shipButton.addActionListener(e -> shipAdd());
 
@@ -236,7 +236,7 @@ public class BattleShip extends JFrame implements ActionListener{
 
         directionButton = new JButton();
         p1.add(directionButton);
-        directionButton.setBounds(0,200,100,150);
+        directionButton.setBounds(shipButton.getX()-150,shipButton.getY(),100,100);
         directionButton.setText("N");
         directionButton.addActionListener(e -> directionChange());
         directionButton.setVisible(false);  
